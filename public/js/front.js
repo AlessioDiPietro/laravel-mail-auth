@@ -2019,6 +2019,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PostDet',
   data: function data() {
@@ -38028,6 +38029,8 @@ var render = function() {
       _c("div", { staticClass: "card-header" }, [
         _vm._v("\n            " + _vm._s(_vm.ArrayDet.title) + "\n        ")
       ]),
+      _vm._v(" "),
+      _c("img", { attrs: { src: _vm.ArrayDet.cover, alt: "" } }),
       _vm._v(" "),
       _c(
         "div",

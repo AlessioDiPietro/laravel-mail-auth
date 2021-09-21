@@ -36,7 +36,9 @@ class PostController extends Controller
 
         $post = Post::where('slug', $slug)->witch('category','tags')->first();
         if($post){
-            
+            if($post->cover){
+                $post->cover = url('storage/' . $post->cover);
+            }
             return response()->json([
                 'results' => $post,
                 'success' => true
