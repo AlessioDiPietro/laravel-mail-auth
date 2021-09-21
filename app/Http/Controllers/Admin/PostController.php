@@ -112,11 +112,16 @@ class PostController extends Controller
     {
         $request->validate([
             'title'=> 'required',
-            'article'=> 'required'
+            'article'=> 'required',
+            'image'=> 'nullable|image'
         ]);
 
         $data=$request->all();
-
+        if(array_key_exists('image',$data)){
+            $cover_path = Storage::put('covers',$data['image']);
+            Storage::delete($post->cover);
+            $data['cover']= $cover_path;
+        }
         $post->update($data);
 
         if(array_key_exists('tags', $data)){
@@ -133,6 +138,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        Storage::delete($post->cover);
         $post->delete();
         $post->tags()->detach();
         return redirect()->route('admin.posts.index');

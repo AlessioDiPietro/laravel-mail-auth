@@ -3,12 +3,17 @@
     
 
 @section('content')
-    <form method="post" action="{{route('admin.posts.update', $post->id)}}">
+    <form method="post" action="{{route('admin.posts.update', $post->id)}}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">
         <label for="titolo" class="form-label">Titolo</label>
-        <input type="text" class="form-control" id="titolo" aria-describedby="emailHelp" name="title" value="{{ old('title', $post->title)}}">
+        <input type="text" class="form-control mb-4" id="titolo" aria-describedby="emailHelp" name="title" value="{{ old('title', $post->title)}}">
+        @if ($post->cover)
+            <img src="{{asset('storage/' . $post->cover )}}" alt="">
+        @endif
+        <label for="img" class="form-label">La tua cover</label>
+        <input type="file" name="image" class="form-control-file mb-4">
         <label for="descrizione" class="form-label">articolo</label>
         <textarea name="article" id="descrizione" cols="30" rows="10" class="form-control">{{ old('article', $post->article)}}</textarea>
         <label for="cat" class="form-label">categoria</label>
@@ -26,7 +31,7 @@
         <label for="">lettura:</label>
           @foreach ($tags as $tag)
               <input type="checkbox" name="tags[]" id="tag{{$loop->iteration}}"value="{{$tag->id}}"
-              @if(!errors->any() && $post->tags->contains($tag->id)) checked
+              @if( !$errors->any() && $post->tags->contains($tag->id)) checked
               @elseif(in_array($tag->id, old('tags',[]))) checked
               @endif
               
