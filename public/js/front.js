@@ -1992,17 +1992,22 @@ __webpack_require__.r(__webpack_exports__);
       name: '',
       email: '',
       message: '',
-      errors: {}
+      errors: {},
+      sending: false,
+      success: false
     };
   },
   methods: {
     sendForm: function sendForm() {
+      var _this = this;
+
       axios.post('/api/contacts', {
         'name': this.name,
         'email': this.email,
         'message': this.message
       }).then(function (res) {
-        console.log(res.data.results);
+        console.log(res.data);
+        _this.success = true;
       });
     }
   }
@@ -38010,6 +38015,10 @@ var render = function() {
         }
       },
       [
+        _vm.success
+          ? _c("div", { staticClass: "success" }, [_vm._v("Messaggio inviato")])
+          : _vm._e(),
+        _vm._v(" "),
         _c("div", { staticClass: "mb-3" }, [
           _c(
             "label",
@@ -38104,7 +38113,7 @@ var render = function() {
         _c(
           "button",
           { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("Submit")]
+          [_vm._v(_vm._s(_vm.sending ? "invio in corso" : "invia"))]
         )
       ]
     )

@@ -2,7 +2,7 @@
     <div class="container">
         <h1>Benvenuti alla Home Contact</h1>
             <form  @submit.prevent="sendForm">
-
+                <div v-if="success" class="success">Messaggio inviato</div>
             <div class="mb-3">
                 <label for="user-name" class="form-label">Nome Utente</label>
                 <input type="text" v-model="name" class="form-control" id="user-name" name="name" aria-describedby="nome">
@@ -18,7 +18,7 @@
                     
             </div>
             
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">{{sending ? 'invio in corso' : 'invia'}}</button>
         </form>
     </div>
 </template>
@@ -32,7 +32,9 @@ export default {
             name:'',
             email: '',
             message:'',
-            errors:{}
+            errors:{},
+            sending: false,
+            success:false
         }
     },
     methods: {
@@ -43,7 +45,8 @@ export default {
                 'message': this.message,
             })
             .then(res=>{
-                console.log(res.data.results);
+                console.log(res.data);
+                this.success = true;
                 
             })
         }

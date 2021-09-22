@@ -15,16 +15,11 @@ class ContactController extends Controller
         $data = $request->all();
         $validator = Validator::make($request->all(),[
             'name'=>'required',
-            'email'=>'required',
+            'email'=>'required|email',
             'message'=>'required',
         ]);
-        if ($validator->fails()){
-            return response()->json([
-                'success'=>false,
-                'errors'=>$validator->errors()
-
-            ]);
-        }
+        
+        
         $new_lead = new Lead();
         $new_lead->fill($data);
         $new_lead->save();
