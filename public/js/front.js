@@ -2001,13 +2001,16 @@ __webpack_require__.r(__webpack_exports__);
     sendForm: function sendForm() {
       var _this = this;
 
+      this.sending = true;
       axios.post('/api/contacts', {
         'name': this.name,
         'email': this.email,
         'message': this.message
       }).then(function (res) {
-        console.log(res.data);
+        console.log(res);
         _this.success = true;
+        _this.sending = false;
+        _this.name = '', _this.email = '', _this.message = '';
       });
     }
   }

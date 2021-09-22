@@ -39,14 +39,19 @@ export default {
     },
     methods: {
         sendForm(){
+            this.sending = true;
             axios.post('/api/contacts', {
                 'name': this.name,
                 'email': this.email,
                 'message': this.message,
             })
             .then(res=>{
-                console.log(res.data);
+                console.log(res);
                 this.success = true;
+                this.sending = false;
+                this.name = '',
+                this.email = '',
+                this.message = ''
                 
             })
         }
